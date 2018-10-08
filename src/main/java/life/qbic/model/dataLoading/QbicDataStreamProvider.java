@@ -43,10 +43,8 @@ public class QbicDataStreamProvider {
      * checks whether any filtering option (suffix or regex) has been passed and applies filtering if needed
      *
      * @param commandLineParameters
-     * @param qbicDataDownloader
-     * @throws IOException
      */
-    public InputStream provideInputStreamForIds(PostmanCommandLineOptions commandLineParameters, QbicDataDownloader qbicDataDownloader) throws IOException {
+    public InputStream provideInputStreamForIds(PostmanCommandLineOptions commandLineParameters) {
         QbicDataFinder qbicDataFinder = new QbicDataFinder(applicationServer,
                 dataStoreServer,
                 sessionToken,
@@ -103,13 +101,12 @@ public class QbicDataStreamProvider {
     }
 
     /**
-     * Provides an Inputstream files that have been found after filtering for suffixes/regexes by a list of supplied IDs
+     * Provides an InputStream files that have been found after filtering for suffixes/regexes by a list of supplied IDs
      *
      * @param filteredIDs
      * @return exitcode
-     * @throws IOException
      */
-    public InputStream getDatasetStreamFromFilteredIds(List<IDataSetFileId> filteredIDs) {
+    private InputStream getDatasetStreamFromFilteredIds(List<IDataSetFileId> filteredIDs) {
         List<InputStream> inputStreams = new ArrayList<>();
 
         for (IDataSetFileId id : filteredIDs) {
@@ -123,13 +120,13 @@ public class QbicDataStreamProvider {
     }
 
     /**
-     * Provides an Inputstream for a given list of datasets
+     * Provides an InputStream for a given list of datasets
      * There was no filtering applied here!
      *
      * @param dataSetList A list of datasets
      * @return InputStream
      */
-    public InputStream getDatasetStreamFromDatasetList(List<DataSet> dataSetList) {
+    private InputStream getDatasetStreamFromDatasetList(List<DataSet> dataSetList) {
         List<InputStream> inputStreams = new ArrayList<>();
 
         for (DataSet dataset : dataSetList) {

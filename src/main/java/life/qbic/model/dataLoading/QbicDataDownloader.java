@@ -254,7 +254,7 @@ public class QbicDataDownloader {
             DataSetFileDownloadOptions options = new DataSetFileDownloadOptions();
             IDataSetFileId fileId = new DataSetFilePermId(new DataSetPermId(permID.toString()));
             options.setRecursive(true);
-            InputStream stream = this.dataStoreServer.downloadFiles(sessionToken, Arrays.asList(fileId), options);
+            InputStream stream = this.dataStoreServer.downloadFiles(sessionToken, Collections.singletonList(fileId), options);
             DataSetFileDownloadReader reader = new DataSetFileDownloadReader(stream);
             DataSetFileDownload file;
 
