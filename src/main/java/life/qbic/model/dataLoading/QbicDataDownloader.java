@@ -21,10 +21,6 @@ import java.util.*;
 
 public class QbicDataDownloader {
 
-    private String user;
-
-    private String password;
-
     private IApplicationServerApi applicationServer;
 
     private IDataStoreServerApi dataStoreServer;
@@ -42,60 +38,14 @@ public class QbicDataDownloader {
      * Constructor for a QBiCDataLoaderInstance
      * @param AppServerUri The openBIS application server URL (AS)
      * @param DataServerUri The openBIS datastore server URL (DSS)
-     * @param user The openBIS user
-     * @param password The openBis password
      * @param bufferSize The buffer size for the InputStream reader
      */
-    public QbicDataDownloader(String AppServerUri, String DataServerUri,
-                              String user, String password,
+    public QbicDataDownloader(IApplicationServerApi applicationServer, IDataStoreServerApi dataStoreServer,
                               int bufferSize, String filterType) {
         this.defaultBufferSize = bufferSize;
         this.filterType = filterType;
-
-        if (!AppServerUri.isEmpty()) {
-            this.applicationServer = HttpInvokerUtils.createServiceStub(
-                    IApplicationServerApi.class,
-                    AppServerUri + IApplicationServerApi.SERVICE_URL, 10000);
-        } else {
-            this.applicationServer = null;
-        }
-        if (!DataServerUri.isEmpty()) {
-            this.dataStoreServer = HttpInvokerUtils.createStreamSupportingServiceStub(
-                    IDataStoreServerApi.class,
-                    DataServerUri + IDataStoreServerApi.SERVICE_URL, 10000);
-        } else {
-            this.dataStoreServer = null;
-        }
-
-        this.setCredentials(user, password);
-    }
-
-    /**
-     * Setter for user and password credentials
-     * @param user The openBIS user
-     * @param password The openBIS user's password
-     * @return QBiCDataLoader instance
-     */
-    public QbicDataDownloader setCredentials(String user, String password) {
-        this.user = user;
-        this.password = password;
-        return this;
-    }
-
-    /**
-     * Login method for openBIS authentication
-     * @return 0 if successful, 1 else
-     */
-    public int login() {
-        try {
-            this.sessionToken = this.applicationServer.login(this.user, this.password);
-            this.applicationServer.getSessionInformation(this.sessionToken);
-        } catch (AssertionError | Exception err) {
-            LOG.debug(err);
-            return 1;
-        }
-
-        return 0;
+        this.applicationServer = applicationServer;
+        this.dataStoreServer = dataStoreServer;
     }
 
     /**
@@ -289,5 +239,12 @@ public class QbicDataDownloader {
         return 0;
     }
 
+    public IApplicationServerApi getApplicationServer() {
+        return applicationServer;
+    }
+
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
+    }
 }
     
