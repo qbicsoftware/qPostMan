@@ -35,10 +35,11 @@ public class QbicDataDownloader {
 
 
     /**
-     * Constructor for a QBiCDataLoaderInstance
-     * @param AppServerUri The openBIS application server URL (AS)
-     * @param DataServerUri The openBIS datastore server URL (DSS)
-     * @param bufferSize The buffer size for the InputStream reader
+     *
+     * @param applicationServer
+     * @param dataStoreServer
+     * @param bufferSize
+     * @param filterType
      */
     public QbicDataDownloader(IApplicationServerApi applicationServer, IDataStoreServerApi dataStoreServer,
                               int bufferSize, String filterType) {
