@@ -167,7 +167,7 @@ public class QbicDataDownloader {
                 if (file.getDataSetFile().getFileLength() > 0) {
                     String[] splitted = file.getDataSetFile().getPath().split("/");
                     String lastOne = splitted[splitted.length - 1];
-                    OutputStream os = new FileOutputStream(System.getProperty("user.dir") + File.separator + lastOne);
+                    OutputStream os = new FileOutputStream("/home/lukas/Desktop" + File.separator + lastOne);
                     ProgressBar progressBar = new ProgressBar(lastOne, file.getDataSetFile().getFileLength());
                     int bufferSize = (file.getDataSetFile().getFileLength() < defaultBufferSize) ? (int) file.getDataSetFile().getFileLength() : defaultBufferSize;
                     byte[] buffer = new byte[bufferSize];
@@ -215,7 +215,7 @@ public class QbicDataDownloader {
                 if (file.getDataSetFile().getFileLength() > 0) {
                     String[] splitted = file.getDataSetFile().getPath().split("/");
                     String lastOne = splitted[splitted.length - 1];
-                    OutputStream os = new FileOutputStream(System.getProperty("user.dir") + File.separator + lastOne);
+                    OutputStream os = new FileOutputStream("/home/lukas/Desktop" + File.separator + lastOne);
                     ProgressBar progressBar = new ProgressBar(lastOne, file.getDataSetFile().getFileLength());
                     int bufferSize = (file.getDataSetFile().getFileLength() < defaultBufferSize) ? (int) file.getDataSetFile().getFileLength() : defaultBufferSize;
                     byte[] buffer = new byte[bufferSize];
