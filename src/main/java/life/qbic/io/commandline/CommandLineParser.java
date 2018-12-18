@@ -32,14 +32,14 @@ public class CommandLineParser {
             System.exit(0);
         }
 
-        if ((commandLineParameters.ids == null || commandLineParameters.ids.isEmpty()) && commandLineParameters.filePath == null) {
+        if ((commandLineParameters.ids == null || commandLineParameters.ids.isEmpty()) && commandLineParameters.sampleIDsFilePath == null) {
             System.out.println("You have to provide one ID as command line argument or a file containing IDs.");
             System.exit(1);
-        } else if ((commandLineParameters.ids != null) && (commandLineParameters.filePath != null)) {
+        } else if ((commandLineParameters.ids != null) && (commandLineParameters.sampleIDsFilePath != null)) {
             System.out.println("Arguments --identifier and --file are mutually exclusive, please provide only one.");
             System.exit(1);
-        } else if (commandLineParameters.filePath != null) {
-            commandLineParameters.ids = IdentifierParser.readProvidedIdentifiers(commandLineParameters.filePath.toFile());
+        } else if (commandLineParameters.sampleIDsFilePath != null) {
+            commandLineParameters.ids = IdentifierParser.readProvidedIdentifiers(commandLineParameters.sampleIDsFilePath.toFile());
         }
 
         return commandLineParameters;

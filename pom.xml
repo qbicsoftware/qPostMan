@@ -8,9 +8,8 @@
         <artifactId>cli-parent-pom</artifactId>
         <version>1.3.0</version>
     </parent>
-    <groupId>life.qbic</groupId>
     <artifactId>postman-cli</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.4.0-SNAPSHOT</version>
     <name>Postman cli</name>
     <url>http://github.com/qbicsoftware/postman-cli</url>
     <description>A client software written in Java for dataset downloads from QBiC's data management system openBIS </description>
@@ -54,38 +53,7 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>life.qbic</groupId>
-            <artifactId>core-utils-lib</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${groovy.version}</version>
-            <classifier>indy</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
-            <version>2.14.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>life.qbic.openbis</groupId>
-            <artifactId>openbis_api</artifactId>
-            <version>3-S253.0</version>
-        </dependency>
-
-        <dependency>
+       <dependency>
             <groupId>life.qbic</groupId>
             <artifactId>postman-core-lib</artifactId>
             <version>1.0.1-SNAPSHOT</version>
@@ -116,6 +84,7 @@
                         </goals>
                     </execution>
                 </executions>
+                <version>3.1.0</version>
             </plugin>
 
             <plugin>
@@ -131,66 +100,6 @@
                         <phase>none</phase>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- The following maven antrun plugin is required for the integration of groovy code into java code -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <target>
-                                <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
-                                    <classpath refid="maven.compile.classpath" />
-                                </taskdef>
-                                <mkdir dir="${project.build.outputDirectory}" />
-                                <groovyc srcdir="${basedir}/src/main/groovy" destdir="${project.build.outputDirectory}" encoding="${project.build.sourceEncoding}">
-                                    <classpath refid="maven.compile.classpath" />
-                                    <src>
-                                        <pathelement path="${project.basedir}/src/main/java" />
-                                    </src>
-                                    <javac source="${maven.compiler.source}" target="${maven.compiler.target}" />
-                                </groovyc>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <configuration>
-                            <target>
-                                <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
-                                    <classpath refid="maven.test.classpath" />
-                                </taskdef>
-                                <mkdir dir="${project.build.testOutputDirectory}" />
-                                <groovyc srcdir="${basedir}/src/test/groovy" destdir="${project.build.testOutputDirectory}" encoding="${project.build.sourceEncoding}">
-                                    <classpath refid="maven.test.classpath" />
-                                    <src>
-                                        <pathelement path="${project.basedir}/src/test/java" />
-                                    </src>
-                                    <javac source="${maven.compiler.source}" target="${maven.compiler.target}" />
-                                </groovyc>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-ant</artifactId>
-                        <version>${groovy.version}</version>
-                        <classifier>indy</classifier>
-                    </dependency>
-                </dependencies>
             </plugin>
 
         </plugins>

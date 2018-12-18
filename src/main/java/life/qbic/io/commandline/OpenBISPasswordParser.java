@@ -14,7 +14,8 @@ public class OpenBISPasswordParser {
    * 
    * @return The password
      */
-  public static String readPasswordFromInputStream() {
+  public static String readPasswordFromInputStream(final String user) {
+    System.out.format("Please provide password for user \'%s\':\n", user);
     char[] password;
     Console console = System.console();
     if (console == null) {

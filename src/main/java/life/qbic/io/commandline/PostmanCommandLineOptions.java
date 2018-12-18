@@ -22,7 +22,7 @@ public class PostmanCommandLineOptions {
     public List<String> ids;
 
     @Option(names = {"-f", "--file"}, description = "a file with line-separated list of QBiC sample ids")
-    public Path filePath;
+    public Path sampleIDsFilePath;
 
     @Option(names = {"-o", "--output"}, description = "output path for all downloaded files")
     public String outputPath;
@@ -49,5 +49,21 @@ public class PostmanCommandLineOptions {
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "display a help message")
     public boolean helpRequested = false;
 
+    @Override
+    public String toString() {
+        return "PostmanCommandLineOptions{" +
+                "user='" + user + '\'' +
+                ", ids=" + ids +
+                ", sampleIDsFilePath=" + sampleIDsFilePath +
+                ", outputPath='" + outputPath + '\'' +
+                ", bufferMultiplier=" + bufferMultiplier +
+                ", suffixes=" + suffixes +
+                ", regexPatterns=" + regexPatterns +
+                ", datasetType='" + datasetType + '\'' +
+                ", dss_url='" + dss_url + '\'' +
+                ", as_url='" + as_url + '\'' +
+                ", helpRequested=" + helpRequested +
+                '}';
+    }
 }
 
