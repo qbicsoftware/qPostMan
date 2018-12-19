@@ -3,6 +3,7 @@ package life.qbic;
 import life.qbic.core.PostmanFilterOptions;
 import life.qbic.core.authentication.PostmanConfig;
 import life.qbic.core.authentication.PostmanSessionManager;
+import life.qbic.dataLoading.PostmanDataDownloaderOldAPI;
 import life.qbic.dataLoading.PostmanDataDownloaderV3;
 import life.qbic.dataLoading.PostmanDataFinder;
 import life.qbic.exceptions.PostmanOpenBISLoginFailedException;
@@ -49,13 +50,22 @@ public class App {
                                                                         postmanSessionManager.getDataStoreServer(),
                                                                         postmanSessionManager.getSessionToken());
 
-            PostmanDataDownloaderV3 postmanDataDownloaderV3 = new PostmanDataDownloaderV3(postmanSessionManager.getDataStoreServer(),
-                                                                                          postmanSessionManager.getSessionToken());
-
-            postmanDataDownloaderV3.downloadRequestedFilesOfDatasets(postmanCommandLineOptions.ids,
-                                                                     postmanFilterOptions,
-                                                                     postmanDataFinder,
-                                                                     postmanCommandLineOptions.outputPath);
+            // Use old API? Likely quicker, but won't be around forever!
+            if (postmanCommandLineOptions.old) {
+                PostmanDataDownloaderOldAPI postmanDataDownloaderOldAPI = new PostmanDataDownloaderOldAPI(postmanCommandLineOptions.as_url,
+                                                                                                          postmanSessionManager.getSessionToken());
+                postmanDataDownloaderOldAPI.downloadRequestedFilesOfDatasets(postmanCommandLineOptions.ids,
+                                                                             postmanFilterOptions,
+                                                                             postmanDataFinder,
+                                                                             postmanCommandLineOptions.outputPath);
+            } else {
+                PostmanDataDownloaderV3 postmanDataDownloaderV3 = new PostmanDataDownloaderV3(postmanSessionManager.getDataStoreServer(),
+                                                                                              postmanSessionManager.getSessionToken());
+                postmanDataDownloaderV3.downloadRequestedFilesOfDatasets(postmanCommandLineOptions.ids,
+                                                                         postmanFilterOptions,
+                                                                         postmanDataFinder,
+                                                                         postmanCommandLineOptions.outputPath);
+            }
         } catch (IOException e) {
             LOG.error("Commandline options could not be parsed correctly! Error message: ", e.getMessage());
         } catch (PostmanOpenBISLoginFailedException e) {

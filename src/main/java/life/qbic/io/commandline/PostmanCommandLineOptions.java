@@ -14,6 +14,9 @@ import picocli.CommandLine.Parameters;
         description = "A client software for dataset downloads from QBiC's data management system openBIS.")
 public class PostmanCommandLineOptions {
 
+    @Option(names = {"-old", "--old"}, description = "Use the old, temporary, but faster API. Not all features may always be available!")
+    public boolean old;
+
     @Option(names = {"-u", "--user"}, required = true, description = "openBIS user name")
     public String user;
 

@@ -56,7 +56,7 @@
        <dependency>
             <groupId>life.qbic</groupId>
             <artifactId>postman-core-lib</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
