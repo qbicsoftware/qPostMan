@@ -6,7 +6,7 @@
 
 A client software written in Java for dataset downloads from QBiC's data management system openBIS (https://wiki-bsse.ethz.ch/display/bis/Home).
 
-We are making use of the V3 API of openBIS (https://wiki-bsse.ethz.ch/display/openBISDoc1605/openBIS+V3+API) in order to interact with the data management system from command line, in order to provide a quick data retreaval on server or cluster resources, where the download via the qPortal is impractical. Experimental support is also provided for the old V1 API.
+We are making use of the V3 API of openBIS (https://wiki-bsse.ethz.ch/display/openBISDoc1605/openBIS+V3+API) in order to interact with the data management system from command line, to provide a quick data retrieval on server or cluster resources, where the download via the qPortal is impractical. Experimental support is also provided for the old V1 API.
 
 ## Download
 You can download postman from the GitHub release page: https://github.com/qbicsoftware/postman-cli/releases .
