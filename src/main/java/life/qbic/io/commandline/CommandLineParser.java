@@ -1,5 +1,6 @@
 package life.qbic.io.commandline;
 
+import life.qbic.core.SupportedFileTypes;
 import life.qbic.io.parser.IdentifierParser;
 import picocli.CommandLine;
 
@@ -29,6 +30,12 @@ public class CommandLineParser {
 
         if (commandLineParameters.helpRequested) {
             CommandLine.usage(new PostmanCommandLineOptions(), System.out);
+            System.exit(0);
+        }
+
+        // user wants to see the list of all supported dataset types for filtering
+        if (commandLineParameters.datasetTypeHelp) {
+            SupportedFileTypes.printSupportedFileTypes();
             System.exit(0);
         }
 

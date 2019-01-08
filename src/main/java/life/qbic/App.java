@@ -1,6 +1,7 @@
 package life.qbic;
 
 import life.qbic.core.PostmanFilterOptions;
+import life.qbic.core.SupportedFileTypes;
 import life.qbic.core.authentication.PostmanConfig;
 import life.qbic.core.authentication.PostmanSessionManager;
 import life.qbic.dataLoading.PostmanDataDownloaderOldAPI;
@@ -26,6 +27,7 @@ public class App {
     public static void main(String[] args) {
         try {
             PostmanCommandLineOptions postmanCommandLineOptions = CommandLineParser.parseAndVerifyCommandLineParameters(args);
+
             String password = OpenBISPasswordParser.readPasswordFromInputStream(postmanCommandLineOptions.user);
             PostmanConfig postmanConfig = new PostmanConfig(postmanCommandLineOptions.user,
                                                             password,
@@ -36,15 +38,10 @@ public class App {
             postmanSessionManager.loginToOpenBIS(postmanConfig);
 
             PostmanFilterOptions postmanFilterOptions = new PostmanFilterOptions();
-            if (!postmanCommandLineOptions.suffixes.isEmpty()) {
-                postmanFilterOptions.setSuffixes(postmanCommandLineOptions.suffixes);
-            }
-            if (!postmanCommandLineOptions.regexPatterns.isEmpty()) {
-                postmanFilterOptions.setRegexPatterns(postmanCommandLineOptions.regexPatterns);
-            }
-            if (!postmanCommandLineOptions.datasetType.isEmpty()) {
-                postmanFilterOptions.setFileType(postmanCommandLineOptions.datasetType);
-            }
+            if (!postmanCommandLineOptions.suffixes.isEmpty()) { postmanFilterOptions.setSuffixes(postmanCommandLineOptions.suffixes); }
+            if (!postmanCommandLineOptions.regexPatterns.isEmpty()) { postmanFilterOptions.setRegexPatterns(postmanCommandLineOptions.regexPatterns); }
+            if (!postmanCommandLineOptions.datasetType.isEmpty()) { postmanFilterOptions.setFileType(postmanCommandLineOptions.datasetType); }
+            if (!postmanCommandLineOptions.datasetCodes.isEmpty()) { postmanFilterOptions.setDatasetCodes(postmanCommandLineOptions.datasetCodes); }
 
             PostmanDataFinder postmanDataFinder = new PostmanDataFinder(postmanSessionManager.getApplicationServer(),
                                                                         postmanSessionManager.getDataStoreServer(),
