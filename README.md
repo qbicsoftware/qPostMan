@@ -2,11 +2,11 @@
 
 # postman
 
-**Current stable version: 0.3.0 (01. October 2018)**
+**Current stable version: 0.4.0 (15. January 2019)**
 
 A client software written in Java for dataset downloads from QBiC's data management system openBIS (https://wiki-bsse.ethz.ch/display/bis/Home).
 
-We are making use of the V3 API of openBIS (https://wiki-bsse.ethz.ch/display/openBISDoc1605/openBIS+V3+API) in order to interact with the data management system from command line, in order to provide a quick data retreaval on server or cluster resources, where the download via the qPortal is impractical.
+We are making use of the V3 API of openBIS (https://wiki-bsse.ethz.ch/display/openBISDoc1605/openBIS+V3+API) in order to interact with the data management system from command line, in order to provide a quick data retreaval on server or cluster resources, where the download via the qPortal is impractical. Experimental support is also provided for the old V1 API.
 
 ## Download
 You can download postman from the GitHub release page: https://github.com/qbicsoftware/postman-cli/releases .
@@ -29,11 +29,15 @@ Usage: <main class> [-h] [-b=<bufferMultiplier>] [-f=<filePath>]
   -u,  --user=<user>          openBIS user name   
   -f,  --file=<filePath>      a file with line-separated list of QBiC sample ids
   -t,  --type=<datasetType>   filter for a given openBIS dataset type
-  -s,  --type=<suffix>        filter for a given openBIS file suffix
-  -r,  --type=<regex>         filter for a given openBIS file regex     
+  -s,  --suffix=<suffix>      filter for a given openBIS file suffix
+  -r,  --regex=<regex>        filter for a given openBIS file regex 
+  -c,  --dscode=<datasetCode> filter for a given dataset code
+  -o,  --output<path>         output path to which all files will be downloaded to
   -b,  --buffer-size=<bufferMultiplier>
                               a integer muliple of 1024 bytes (default). Only
                                 change this if you know what you are doing.
+  -old --old                  uses the old V1 API to download the files. May be up to 80% faster. Please not that filtering                                 support is experimental!    
+  -d,  --dstypes              prints all supported dataset type filters    
   -h, --help                  display a help message
 ```
 ### Provide a QBiC ID
@@ -43,118 +47,29 @@ The simplest scenario is, that you want to download a dataset/datasets from a sa
 ```
 postman will prompt you for your password, which is the password from your QBiC user account.
 
-After you have provided your password and authenticate successfully, postman tries to download all datasets that are registered for that given sample ID and downloads them to the current working directory:
+After you have provided your password and authenticate successfully, postman tries to download all datasets that are registered for that given sample ID and downloads them to the current working directory. Example run:
 
 ```bash
-[bbbfs01@u-003-ncmu03 ~]$ java -jar postman.jar -u bbbfs01 QMFKD003AG                                                                                          
-Provide password for user 'bbbfs01':                                                                                                                           
-                                                                                                                                                               
-12:32:02.038 [main] INFO  life.qbic.App - OpenBis login returned with 0                                                                                        
-12:32:02.043 [main] INFO  life.qbic.App - Connection to openBIS was successful.                                                                                
-12:32:02.043 [main] INFO  life.qbic.App - 1 provided openBIS identifiers have been found: [QMFKD003AG]                                                         
-12:32:02.044 [main] INFO  life.qbic.App - Downloading files for provided identifier QMFKD003AG                                                                 
-12:32:02.278 [main] INFO  life.qbic.App - Number of data sets found: 2                                                                                         
-12:32:02.279 [main] INFO  life.qbic.App - Initialize download ...                                                                                              
-QMFKD003AG_SRR099967_1.filt.fastq.gz                                 [###                                                            ]    0.38/7.94   Gb       
+[bbbfs01@u-003-ncmu03 ~]$ java -jar postman.jar -u bbbfs01 QMFKD003AG                                                             
 ```
 
 ### Filter for dataset type
 
-You can filter for dataset types, using the `-t` option and one of the following openBIS dataset types we are currently using:
-
-```bash
-ARR
-AUDIT
-CEL
-CSV
-EXPERIMENTAL_DESIGN
-EXPRESSION_MATRIX
-FASTQ
-FEATUREXML
-GZ
-IDXML
-JPG
-MAT
-MZML
-PDF
-PNG
-Q_BMI_IMAGING_DATA
-Q_DOCUMENT
-Q_EXT_MS_QUALITYCONTROL_RESULTS
-Q_EXT_NGS_QUALITYCONTROL_RESULTS
-Q_FASTA_DATA
-Q_HT_QPCR_DATA
-Q_MA_AGILENT_DATA
-Q_MA_CHIP_IMAGE
-Q_MA_RAW_DATA
-Q_MS_MZML_DATA
-Q_MS_RAW_DATA
-Q_MTB_ARCHIVE
-Q_NGS_HLATYPING_DATA
-Q_NGS_IMMUNE_MONITORING_DATA
-Q_NGS_IONTORRENT_DATA
-Q_NGS_MAPPING_DATA
-Q_NGS_MTB_DATA
-Q_NGS_RAW_DATA
-Q_NGS_READ_MATCH_ARCHIVE
-Q_NGS_VARIANT_CALLING_DATA
-Q_PEPTIDE_DATA
-Q_PROJECT_DATA
-Q_TEST
-Q_VACCINE_CONSTRUCT_DATA
-Q_WF_EDDA_BENCHMARK_LOGS
-Q_WF_EDDA_BENCHMARK_RESULTS
-Q_WF_MA_QUALITYCONTROL_LOGS
-Q_WF_MA_QUALITYCONTROL_RESULTS
-Q_WF_MS_INDIVIDUALIZED_PROTEOME_LOGS
-Q_WF_MS_INDIVIDUALIZED_PROTEOME_RESULTS
-Q_WF_MS_LIGANDOMICS_ID_LOGS
-Q_WF_MS_LIGANDOMICS_ID_RESULTS
-Q_WF_MS_LIGANDOMICS_QC_LOGS
-Q_WF_MS_LIGANDOMICS_QC_RESULTS
-Q_WF_MS_MAXQUANT_LOGS
-Q_WF_MS_MAXQUANT_ORIGINAL_OUT
-Q_WF_MS_MAXQUANT_RESULTS
-Q_WF_MS_PEAKPICKING_LOGS
-Q_WF_MS_PEPTIDEID_LOGS
-Q_WF_MS_PEPTIDEID_RESULTS
-Q_WF_MS_QUALITYCONTROL_LOGS
-Q_WF_MS_QUALITYCONTROL_RESULTS
-Q_WF_NGS_16S_TAXONOMIC_PROFILING_LOGS
-Q_WF_NGS_EPITOPE_PREDICTION_LOGS
-Q_WF_NGS_EPITOPE_PREDICTION_RESULTS
-Q_WF_NGS_HLATYPING_LOGS
-Q_WF_NGS_HLATYPING_RESULTS
-Q_WF_NGS_MAPPING_LOGS
-Q_WF_NGS_MAPPING_RESULTS
-Q_WF_NGS_QUALITYCONTROL_LOGS
-Q_WF_NGS_QUALITYCONTROL_RESULTS
-Q_WF_NGS_RNAEXPRESSIONANALYSIS_LOGS
-Q_WF_NGS_RNAEXPRESSIONANALYSIS_RESULTS
-Q_WF_NGS_SHRNA_COUNTING_LOGS
-Q_WF_NGS_SHRNA_COUNTING_RESULTS
-Q_WF_NGS_VARIANT_ANNOTATION_LOGS
-Q_WF_NGS_VARIANT_ANNOTATION_RESULTS
-Q_WF_NGS_VARIANT_CALLING_LOGS
-Q_WF_NGS_VARIANT_CALLING_RESULTS
-RAW
-SHA256SUM
-TAR
-UNKNOWN
-VCF
-```
+You can filter for dataset types, using the `-t` option and one of the following openBIS dataset types we are currently using. You can get a list of all currently supported dataset types by running postman with the `-d` option. Moreover you can refer to the list [Supported dataset types](doc/supportedDatasetTypes).
 
 ### Filter for file suffix
 
 You can filter for file suffixes, using the `-s` option:    
-Example: -s .pdf
+Example: `-s .pdf`
 
 ### Filter for file regex
 
 You can filter for files by a provided regex, using the `-r` option:    
-Example: -r .jobscript.FastQC.*
+Example: `-r .*.jobscript.FastQC.*`
 
-Please note that depending on your favorite shell, you may need quote your regex. 
+Please note that depending on your favorite shell, you may need quote your regex. Note that postman supports arity parameters. Therefore it is viable to run postman with multiple parameters after an option which will all be assigned correctly:    
+`-s .pdf .html` will interpret `.pdf` and `.html` as suffixes.
+
 
 ### Provide a file with several QBiC IDs
 In order to download datasets from several samples at once, you can provide a simple text file with multiple, line-separated, QBiC IDs and hand it to postman with the `-f` option.
