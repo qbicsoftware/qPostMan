@@ -36,7 +36,8 @@ Usage: <main class> [-h] [-b=<bufferMultiplier>] [-f=<filePath>]
   -b,  --buffer-size=<bufferMultiplier>
                               a integer muliple of 1024 bytes (default). Only
                                 change this if you know what you are doing.
-  -old --old                  uses the old V1 API to download the files. May be up to 80% faster. Please not that filtering                                 support is experimental!    
+  -old --old                  uses the old V1 API to download the files. May be up to 80% faster.    
+                              Please not that filtering support is experimental!    
   -d,  --dstypes              prints all supported dataset type filters    
   -h, --help                  display a help message
 ```
