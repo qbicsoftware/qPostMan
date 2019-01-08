@@ -98,7 +98,7 @@ DSS_URL (DataStoreServerURL)
 
 A default file is provided here: [default-config](https://github.com/qbicsoftware/postman-cli/blob/development/config.txt). If no config file is provided postman uses the default values set in the PostmanCommandLineOptions class.   
 
-If no config file or commandline option is provided, Postman will resort to the defaults set here: [Defaults](https://github.com/qbicsoftware/postman-cli/blob/development/src/main/java/life/qbic/io/commandline/PostmanCommandLineOptions.java).    
+If no config file or commandline option is provided, Postman will resort to the defaults set here: [Defaults](src/main/java/life/qbic/io/commandline/PostmanCommandLineOptions.java).    
 Hence, the default AS is set to: <code>https://qbis.qbic.uni-tuebingen.de/openbis/openbis</code>    
 and the DSS defaults to: <code>https://qbis.qbic.uni-tuebingen.de:444/datastore_server</code>    
 
